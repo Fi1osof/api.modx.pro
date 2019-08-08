@@ -1,0 +1,126 @@
+
+type ModxProUser{
+  avatar: String
+  avatar_retina: String
+  """Comments quantity"""
+  comments: Int
+  id: Int!
+
+  """Не знаю для чего он:)"""
+  idx: Int
+
+  link: String
+  name: String
+
+  """Место в рейтинге"""
+  place: Int
+
+  """Очки рейтинга"""
+  rating: Float
+
+  """Сколько написал топиков"""
+  topics: Int
+
+  username: String!
+
+  """Last visit"""
+  visitedon: DateTime
+
+  """Вероятно признак принимает ли заказы"""
+  work: Boolean
+}
+
+
+type Query {
+
+  """Список пользователей с постраничностью"""
+  modx_pro_users_connection(
+
+    """Лимит записей на страницу"""
+    limit: Int = 20
+
+    """Номер страницы"""
+    page: Int
+
+    """Условия поиска"""
+    where: ModxProUserWhereInput
+
+    """Сортировка"""
+    orderBy: ModxProUserOrderByInput
+
+  ): ModxProUsersConnection!
+
+}
+
+
+"""Условия поиска"""
+input ModxProUserWhereInput{
+
+  """Поисковый запрос"""
+  query: String
+
+  # """Принимает ли заказы"""
+  # work: Boolean
+
+  """Только тех, кто принимает заказы"""
+  work_only: Boolean
+
+  # """Имеет положительный рейтинг"""
+  # rating: Boolean
+
+  """Только с положительным рейтингом"""
+  positive_rating_only: Boolean
+
+}
+
+"""Сортировка"""
+input ModxProUserOrderByInput {
+
+  """Сортировка"""
+  sort: ModxProUsersSort
+
+  """Направление сортировки"""
+  dir: ModxProSortDirection = asc
+
+}
+
+
+"""Сортировка пльзователей"""
+enum ModxProUsersSort {
+  
+  """По ретингу"""
+  rating
+
+  """По количеству топиков"""
+  topics
+
+  """По количеству комментариев"""
+  comments
+
+}
+
+enum ModxProSortDirection {
+  asc
+  desc
+}
+
+
+type ModxProUsersConnection {
+  success: Boolean!
+  limit: Int!
+  start: Int
+  total: Int!
+  pages: [ModxProUsersConnectionPage!]!
+  results: [ModxProUser!]!
+  
+  """Возвращается в случае ошибки"""
+  message: String
+  data: Json
+}
+
+type ModxProUsersConnectionPage {
+  isActive: Boolean!
+  isCurrent: Boolean!
+  num: String!
+  url: String!
+}

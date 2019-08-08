@@ -2,6 +2,8 @@
 """ Json data type"""
 scalar Json
 
+scalar DateTime
+
 type Query {
 
   """Some string"""

@@ -18,6 +18,7 @@ const { createWriteStream, unlinkSync } = fs;
 const { fileLoader, mergeTypes } = MergeSchema
 
 
+import ModxProUserModule from "./ModxProUser";
 
 class Module extends PrismaModule {
 
@@ -28,6 +29,10 @@ class Module extends PrismaModule {
 
     Object.assign(this, {
     });
+
+    this.mergeModules([
+      ModxProUserModule,
+    ]);
 
     this.foo_json = this.foo_json.bind(this);
 

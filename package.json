@@ -16,7 +16,8 @@
   "dependencies": {
     "@prisma-cms/prisma-module": "latest",
     "chalk": "^2.4.1",
-    "merge-graphql-schemas": "latest"
+    "merge-graphql-schemas": "latest",
+    "urijs": "^1.19.1"
   },
   "devDependencies": {
     "@prisma-cms/server": "latest",
