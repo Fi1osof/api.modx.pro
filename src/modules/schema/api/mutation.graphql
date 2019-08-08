@@ -1,0 +1,10 @@
+
+type Mutation {
+
+  """Return sum of inputs"""
+  calc_sum(
+    vars: [Float!]!
+  ): Float!
+}
+
+

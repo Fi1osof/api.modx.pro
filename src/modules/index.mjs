@@ -29,6 +29,8 @@ class Module extends PrismaModule {
     Object.assign(this, {
     });
 
+    this.foo_json = this.foo_json.bind(this);
+
   }
 
 
@@ -79,14 +81,23 @@ class Module extends PrismaModule {
 
   getResolvers() {
 
-    const resolvers = super.getResolvers();
+    const {
+      Subscription,
+      ...resolvers
+    } = super.getResolvers();
 
 
-    Object.assign(resolvers.Query, this.Query);
+    Object.assign(resolvers.Query, {
+      foo_string: this.foo_string,
+      foo_number: this.foo_number,
+      foo_json: this.foo_json,
+    });
 
-    Object.assign(resolvers.Mutation, this.Mutation);
+    Object.assign(resolvers.Mutation, {
+      calc_sum: this.calc_sum,
+    });
 
-    Object.assign(resolvers.Subscription, this.Subscription);
+    // Object.assign(resolvers.Subscription, this.Subscription);
 
 
     Object.assign(resolvers, {
@@ -95,6 +106,48 @@ class Module extends PrismaModule {
     return resolvers;
   }
 
+
+  foo_string(source, args, ctx, info) {
+
+    return "Some string";
+
+  }
+
+
+  foo_number(source, args, ctx, info) {
+
+    return (Math.random() * 1000).toFixed();
+  }
+
+
+  foo_json(source, args, ctx, info) {
+
+    const date = new Date();
+
+    return {
+      date: {
+        date,
+        year: date.getFullYear(),
+        month: date.getMonth(),
+        day: date.getDay(),
+      },
+      foo_number: this.foo_number(),
+    }
+  }
+
+
+  calc_sum(source, args, ctx, info) {
+
+    const {
+      vars,
+    } = args;
+
+    if (vars.length < 2) {
+      throw new Error("Необходимо минимум два числа");
+    }
+
+    return vars.reduce((a, b) => a + b);
+  }
 
 }
 

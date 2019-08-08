@@ -1,0 +1,16 @@
+
+""" Json data type"""
+scalar Json
+
+type Query {
+
+  """Some string"""
+  foo_string: String!
+
+  """Some number"""
+  foo_number: Int!
+
+  """Some json"""
+  foo_json: Json!
+
+}
