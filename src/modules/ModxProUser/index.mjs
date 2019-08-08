@@ -2,8 +2,6 @@
 import PrismaModule from "@prisma-cms/prisma-module";
 import PrismaProcessor from "@prisma-cms/prisma-processor";
 
-import URI from "urijs";
-
 export class ModxProUserProcessor extends PrismaProcessor {
 
   constructor(props) {
@@ -13,47 +11,39 @@ export class ModxProUserProcessor extends PrismaProcessor {
     this.objectType = "ModxProUser";
   }
 
-  async request(url, args) {
-
-    const uri = new URI(url);
-
-    args && uri.query(args);
-
-    return await fetch(uri.toString(), {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(r => r.json());
-
-  }
-
 
   async modx_pro_users_connection(source, args, info) {
 
+    const {
+      ctx: {
+        modx_pro_request,
+      },
+    } = this;
 
     const {
-      where: {
-        work_only: work,
-        positive_rating_only: rating,
-        ...where
-      },
+      where,
       orderBy,
       ...otherArgs
     } = args;
 
-    let result = await this.request("https://modx.pro/assets/components/modxpro/action.php", {
+
+    const {
+      work_only: work,
+      positive_rating_only: rating,
+      ...otherWhere
+    } = where || {}
+
+    let result = await modx_pro_request("https://modx.pro/assets/components/modxpro/action.php", {
       action: "user/getlist",
       work: work === true ? true : undefined,
       rating: rating === true ? true : undefined,
-      ...where,
+      ...otherWhere,
       ...orderBy,
       ...otherArgs,
     });
 
 
-    console.log("result", JSON.stringify(result, true, 2));
+    // console.log("result", JSON.stringify(result, true, 2));
 
     let {
       success,

@@ -1,6 +1,8 @@
+1.2.0
 ===============================
 - Added test resolvers
 - Added ModxProUser
+- Added ModxProAuthor
 
 1.1.5
 ===============================

@@ -1,0 +1,125 @@
+
+type ModxProAuthor{
+  id: String!
+
+  community: Float!
+  downloads: Int!
+
+  extras: Int
+
+  fullname: String!
+
+  github: Int!
+
+  place: Int!
+
+  """Очки рейтинга"""
+  rating: Float!
+
+
+  """Оценка за поддержку"""
+  support: Float
+
+  """Вероятно признак принимает ли заказы"""
+  work: Boolean
+
+
+  """Теги"""
+  tags: [ModxProAuthorTag!]!
+ 
+  """Профиль пользователя на modx.pro"""
+  User: ModxProUser
+}
+
+
+type ModxProAuthorTag {
+  color: String!
+  tag: String!
+}
+
+
+type Query {
+
+  """Список пользователей с постраничностью"""
+  modx_pro_authors_connection(
+
+    """Лимит записей на страницу"""
+    limit: Int = 20
+
+    """Номер страницы"""
+    page: Int
+
+    """Условия поиска"""
+    where: ModxProAuthorWhereInput
+
+    """Сортировка"""
+    orderBy: ModxProAuthorOrderByInput
+
+  ): ModxProAuthorsConnection!
+
+}
+
+
+"""Условия поиска"""
+input ModxProAuthorWhereInput{
+
+  """Поисковый запрос"""
+  query: String
+
+  # """Принимает ли заказы"""
+  # work: Boolean
+
+  """Только тех, кто принимает заказы"""
+  work_only: Boolean
+
+  # """Имеет положительный рейтинг"""
+  # rating: Boolean
+
+  """Только с положительным рейтингом"""
+  positive_rating_only: Boolean
+
+}
+
+"""Сортировка"""
+input ModxProAuthorOrderByInput {
+
+  """Сортировка"""
+  sort: ModxProAuthorsSort
+
+  """Направление сортировки"""
+  dir: ModxProSortDirection = asc
+
+}
+
+
+"""Сортировка пльзователей"""
+enum ModxProAuthorsSort {
+  
+  """Номер в списке"""
+  place
+
+}
+
+enum ModxProSortDirection {
+  asc
+  desc
+}
+
+
+type ModxProAuthorsConnection {
+  success: Boolean!
+  total: Int!
+  pages: [ModxProAuthorsConnectionPage!]!
+  results: [ModxProAuthor!]!
+  
+  """Возвращается в случае ошибки"""
+  message: String
+  data: Json
+}
+
+type ModxProAuthorsConnectionPage {
+  isActive: Boolean!
+  isCurrent: Boolean!
+  num: String!
+  url: String!
+}

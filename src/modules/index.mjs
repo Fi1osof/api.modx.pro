@@ -19,6 +19,7 @@ const { fileLoader, mergeTypes } = MergeSchema
 
 
 import ModxProUserModule from "./ModxProUser";
+import ModxProAuthorModule from "./ModxProAuthor";
 
 class Module extends PrismaModule {
 
@@ -32,6 +33,7 @@ class Module extends PrismaModule {
 
     this.mergeModules([
       ModxProUserModule,
+      ModxProAuthorModule,
     ]);
 
     this.foo_json = this.foo_json.bind(this);
