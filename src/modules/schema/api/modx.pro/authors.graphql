@@ -109,17 +109,9 @@ enum ModxProSortDirection {
 type ModxProAuthorsConnection {
   success: Boolean!
   total: Int!
-  pages: [ModxProAuthorsConnectionPage!]!
   results: [ModxProAuthor!]!
   
   """Возвращается в случае ошибки"""
   message: String
   data: Json
-}
-
-type ModxProAuthorsConnectionPage {
-  isActive: Boolean!
-  isCurrent: Boolean!
-  num: String!
-  url: String!
 }
