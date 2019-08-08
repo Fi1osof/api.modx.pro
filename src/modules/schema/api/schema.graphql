@@ -10,6 +10,11 @@ type Query {
   """Some number"""
   foo_number: Int!
 
+}
+
+
+type Query {
+
   """Some json"""
   foo_json: Json!
 
